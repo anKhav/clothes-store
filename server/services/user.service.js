@@ -2,6 +2,7 @@ const { User } = require("../db/models");
 const bcrypt = require("bcrypt");
 const UserDto = require("../dtos/userDto");
 const ApiError = require("../error/ApiError");
+const tokenService = require("../services/token.service.js");
 
 class UserService {
   async registration(userData) {
@@ -80,11 +81,29 @@ class UserService {
     const user = await User.findOne({ where: { activationLink } });
     console.log(user);
     if (!user) {
-      return next(ApiError.badRequest("Uncorrect activation link"));
+      return new ApiError("Uncorrect activation link");
     }
     user.isActivated = true;
     user.activationLink = null;
     await user.save();
+  }
+
+  async refresh(refreshToken) {
+    if (!refreshToken) {
+      return new ApiError("Unauthorized");
+    }
+    const userData = await tokenService.validateRefreshToken(refreshToken);
+    const tokenModel = await tokenService.findToken(refreshToken);
+    const tokenFromDb = tokenModel.dataValues.token;
+    if (!userData || !tokenFromDb) {
+      return new ApiError("Unauthorized");
+    }
+    const user = await User.findOne({ where: { email: userData.email } });
+    const userDto = new UserDto(user);
+    const tokens = await tokenService.generateTokens({ ...userDto });
+
+    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    return { ...tokens, user };
   }
 }
 

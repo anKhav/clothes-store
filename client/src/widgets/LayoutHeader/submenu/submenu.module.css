@@ -1,0 +1,13 @@
+.submenu{
+    display: flex;
+    gap: 20px;
+}
+.submenu__item{}
+.submenu__icon{
+    stroke: #000000;
+    transition: .3s;
+}
+.submenu__icon:hover{
+    stroke: #4b4b9f;
+    transition: .3s;
+}

@@ -6,5 +6,6 @@ const router = new Router();
 
 router.get("/", privateMiddleware(), UserController.getAllUsers);
 router.post("/", UserController.registration);
+router.get("/refresh", UserController.refresh);
 
 module.exports = router;

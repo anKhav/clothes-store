@@ -16,7 +16,6 @@ class UserController {
       });
       return res.json(userData);
     } catch (e) {
-      console.log(e);
       return next(new ApiError(e.message));
     }
   }
@@ -26,23 +25,43 @@ class UserController {
       const { email, password } = req.body;
       const user = await userService.getUser(email);
       if (!user) {
-        return next(new ApiError(401, "Email is incorrect"));
+        return next(new ApiError(200, "ok"));
       }
       const validPassword = await bcrypt.compare(password, user.password);
       if (!validPassword) {
         return res.status(401).json({ error: "Incorrect password" });
       }
-      let tokens = TokenService.generateTokens({
+      let tokens = await TokenService.generateTokens({
         email: user.email,
         role: user.role,
       });
       await TokenService.saveToken(user.id, tokens.refreshToken);
-      res.cookie("refresh_token", tokens.refreshToken, {
+
+      res.cookie("refreshToken", tokens.refreshToken, {
         httpOnly: true,
       });
-      res.json(tokens);
+      res.json({
+        data: {
+          email: user.email,
+          tokens,
+        },
+      });
     } catch (e) {
       return next(new ApiError(e.status, e.message));
+    }
+  }
+
+  async refresh(req, res) {
+    try {
+      const { refreshToken } = req.cookies;
+      const userData = await userService.refresh(refreshToken);
+      res.cookie("refreshToken", userData.refreshToken, {
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+      return res.json(userData);
+    } catch (e) {
+      return new ApiError(e.message);
     }
   }
 

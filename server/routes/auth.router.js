@@ -7,6 +7,7 @@ const router = new Router();
 
 router.post("/login", userController.login);
 router.get("/tokens", authMiddleware, async (req, res) => {
+  console.log(req.cookies);
   const data = await TokenService.findAll();
   res.json(data);
 });
