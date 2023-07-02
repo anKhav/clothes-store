@@ -1,15 +1,17 @@
 import "./App.css";
-import Header from "./widgets/LayoutHeader/index.tsx";
-import { BrowserRouter } from "react-router-dom";
-import Footer from "./widgets/footer/footer.tsx";
+import {Route, Routes} from "react-router-dom";
+import Dashboard from "./widgets/dashboard/dashboard.tsx";
+import Login from "./pages/login/login.tsx";
+import Profile from "./pages/profile/profile.tsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <main className="main">app</main>
-      <Footer />
-    </BrowserRouter>
+      <Routes>
+          <Route path='/' element={<Dashboard/>}>
+            <Route path='/auth' element={<Login/>}/>
+            <Route path='/profile' element={<Profile/>}/>
+          </Route>
+      </Routes>
   );
 }
 

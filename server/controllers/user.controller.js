@@ -43,10 +43,11 @@ class UserController {
       res.json({
         data: {
           email: user.email,
-          tokens,
+          access_token:tokens.accessToken,
         },
       });
     } catch (e) {
+      console.log(e)
       return next(new ApiError(e.status, e.message));
     }
   }
@@ -70,7 +71,7 @@ class UserController {
       const users = await userService.getAllUsers();
       return res.json(users);
     } catch (e) {
-      return next(new ApiError(500, e.message));
+      return next(e);
     }
   }
 }
