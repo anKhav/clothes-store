@@ -77,7 +77,7 @@ class UserService {
     return user;
   }
 
-  async activate(activationLink, next) {
+  async activate(activationLink) {
     const user = await User.findOne({ where: { activationLink } });
     console.log(user);
     if (!user) {
@@ -90,6 +90,7 @@ class UserService {
 
   async refresh(refreshToken) {
     if (!refreshToken) {
+      console.log('error')
       return new ApiError("Unauthorized");
     }
     const userData = await tokenService.validateRefreshToken(refreshToken);
@@ -104,6 +105,7 @@ class UserService {
 
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
     return { ...tokens, user };
+
   }
 }
 

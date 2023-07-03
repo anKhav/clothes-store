@@ -1,13 +1,22 @@
-import {useSelector} from "react-redux";
-import {AuthState} from "../../store.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AuthState, RootState} from "../../store.ts";
+import {logoutUser} from "../../features/authSlice.ts";
+import {MouseEvent} from "react";
+import {ThunkDispatch} from "@reduxjs/toolkit";
 
 
 const Profile = () => {
     const user = useSelector((state:AuthState) => state.user?.data)
-    console.log(user);
+    const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch();
+    const logoutHandle = async (e:MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        await dispatch(logoutUser())
+        localStorage.clear()
+    }
     return (
         <div>
-
+            {user?.email}
+            <button onClick={logoutHandle}>Logout</button>
         </div>
     );
 };

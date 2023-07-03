@@ -36,7 +36,6 @@ class UserController {
         role: user.role,
       });
       await TokenService.saveToken(user.id, tokens.refreshToken);
-
       res.cookie("refreshToken", tokens.refreshToken, {
         httpOnly: true,
       });
@@ -47,8 +46,16 @@ class UserController {
         },
       });
     } catch (e) {
-      console.log(e)
       return next(new ApiError(e.status, e.message));
+    }
+  }
+
+  async logout (req, res, next){
+    try {
+        res.clearCookie('refreshToken')
+        res.end()
+    } catch (e) {
+      next(new ApiError(500, e.message))
     }
   }
 
