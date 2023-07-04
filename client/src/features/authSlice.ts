@@ -11,7 +11,8 @@ import axios, {AxiosError} from "axios";
 interface User {
     data:{
         email:string,
-        access_token:string
+        access_token:string,
+        role?:string
     }
 }
 
@@ -36,7 +37,7 @@ export const loginUser = createAsyncThunk(
             return { ...data };
         } catch (error) {
             const err = error as AxiosError;
-            return rejectWithValue(err.message || 'Failed to login');
+            return rejectWithValue(err.message || 'Failed to sign-in');
         }
     }
 );

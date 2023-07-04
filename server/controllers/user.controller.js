@@ -42,6 +42,7 @@ class UserController {
       res.json({
         data: {
           email: user.email,
+          role:user.role,
           access_token:tokens.accessToken,
         },
       });
