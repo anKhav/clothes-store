@@ -4,7 +4,6 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { persistReducer } from 'redux-persist';
 
-// Import the necessary packages for Redux Persist
 import storage from 'redux-persist/lib/storage';
 import axios, {AxiosError} from "axios";
 
@@ -33,6 +32,20 @@ export const loginUser = createAsyncThunk(
     async (credentials: { email: string; password: string }, {rejectWithValue}) => {
         try {
             const response = await axios.post('http://localhost:3000/api/auth/login', credentials, { withCredentials: true });
+            const data = await response.data;
+            return { ...data };
+        } catch (error) {
+            const err = error as AxiosError;
+            return rejectWithValue(err.message || 'Failed to sign-in');
+        }
+    }
+);
+
+export const registerUser = createAsyncThunk(
+    'auth/registerUser',
+    async (credentials: { email: string; password: string }, {rejectWithValue}) => {
+        try {
+            const response = await axios.post('http://localhost:3000/api/user', credentials, { withCredentials: true });
             const data = await response.data;
             return { ...data };
         } catch (error) {
@@ -85,6 +98,20 @@ const authSlice = createSlice({
                 state.user = null;
                 state.error = action.payload as string;
             })
+            .addCase(registerUser.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(registerUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload;
+                state.error = null;
+            })
+            .addCase(registerUser.rejected, (state, action: any) => {
+                state.isLoading = false;
+                state.user = null;
+                state.error = action.payload as string;
+            })
             .addCase(logoutUser.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
@@ -106,7 +133,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
 
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;

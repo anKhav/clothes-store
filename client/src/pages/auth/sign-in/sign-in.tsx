@@ -1,10 +1,10 @@
 import {useForm, SubmitHandler} from 'react-hook-form'
-import styles from './sign-in.module.css'
+import styles from '../sign-in.module.css'
 import {ThunkDispatch} from "@reduxjs/toolkit";
-import {RootState} from "../../store.ts";
+import {RootState} from "../../../store.ts";
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {loginUser} from "../../features/authSlice.ts";
+import {Link, useNavigate} from "react-router-dom";
+import {loginUser} from "../../../features/authSlice.ts";
 
 interface FormInput {
     email:string,
@@ -12,7 +12,7 @@ interface FormInput {
     button:string
 }
 
-const Example = () => {
+const SignIn = () => {
     const {register, handleSubmit, formState:{errors}} = useForm<FormInput>()
     const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch();
     const navigate = useNavigate()
@@ -53,9 +53,13 @@ const Example = () => {
                 />
                 {errors.password && <p className={styles.error}>{errors.password?.message}</p>}
                 <button className={styles.button} type="submit">Sign In</button>
+                <p>
+                    Don't have account?
+                    <Link to='/signup'>Sign Up</Link>
+                </p>
             </form>
         </main>
     );
 };
 
-export default Example;
+export default SignIn;
