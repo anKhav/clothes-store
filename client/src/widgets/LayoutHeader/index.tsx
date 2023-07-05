@@ -47,7 +47,7 @@ const Header = () => {
           Contact Us
         </Link>
       </nav>
-      <Submenu className={styles.submenu} />
+      <Submenu/>
       <button
         className={
           isOpen
