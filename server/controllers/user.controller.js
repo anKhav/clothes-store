@@ -18,6 +18,7 @@ class UserController {
     } catch (e) {
       return next(new ApiError(e.message));
     }
+
   }
 
   async login(req, res, next) {

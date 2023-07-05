@@ -1,7 +1,7 @@
 import {useForm, SubmitHandler} from 'react-hook-form'
-import styles from '../sign-in.module.css'
+import styles from '../auth.module.css'
 import {ThunkDispatch} from "@reduxjs/toolkit";
-import {RootState} from "../../../store.ts";
+import {AuthState} from "../../../store.ts";
 import {useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {loginUser} from "../../../features/authSlice.ts";
@@ -13,8 +13,10 @@ interface FormInput {
 }
 
 const SignIn = () => {
-    const {register, handleSubmit, formState:{errors}} = useForm<FormInput>()
-    const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch();
+    const {register, handleSubmit, formState:{errors}} = useForm<FormInput>({
+        mode:"all"
+    })
+    const dispatch: ThunkDispatch<AuthState, undefined, any> = useDispatch();
     const navigate = useNavigate()
     const loginHandler:SubmitHandler<FormInput> = async (data) => {
         await dispatch(loginUser(data));
@@ -24,38 +26,26 @@ const SignIn = () => {
         <main className={styles.wrapper}>
             <form className={styles.form} onSubmit={handleSubmit(loginHandler)}>
                 <label className={styles.label} htmlFor="email">Email</label>
-                <input className={styles.input}
+                <input className={!errors.email ? styles.input : styles.input + ' ' + styles.input_error}
                        {...register('email',
-                           {required:'Email is required',
-                               pattern: {
-                                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                   message: "invalid email address"
-                               }
+                           {required:'Email is required'
                            }
                        )}
                 />
                 {errors.email && <p className={styles.error}>{errors.email?.message}</p>}
                 <label className={styles.label} htmlFor="password">Password</label>
-                <input className={styles.input}
+                <input className={!errors.password ? styles.input : styles.input + ' ' + styles.input_error}
                        type='password'
                        {...register('password',
-                           {required:'Password is required',
-                               // minLength:{
-                               //     value:8,
-                               //     message:'Password length must be 8 letters or more'
-                               // },
-                               // pattern:{
-                               //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/,
-                               //     message:'Password must contain at least one number, one lowercase and one uppercase letter and one special character '
-                               // }
+                           {required:'Password is required'
                            }
                        )}
                 />
                 {errors.password && <p className={styles.error}>{errors.password?.message}</p>}
                 <button className={styles.button} type="submit">Sign In</button>
-                <p>
+                <p className={styles.text}>
                     Don't have account?
-                    <Link to='/signup'>Sign Up</Link>
+                    <Link className={styles.link} to='/signup'>Sign Up</Link>
                 </p>
             </form>
         </main>
