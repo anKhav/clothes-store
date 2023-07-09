@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasOne(models.Token, { foreignKey: "userId" });
+      User.hasOne(models.Token, { foreignKey: "user_id" });
+      User.hasMany(models.Order, {foreignKey:'user_id'})
+      User.hasMany(models.Rating, {foreignKey:'user_id'})
     }
   }
 
@@ -16,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
+      first_name: DataTypes.STRING,
+      last_name: DataTypes.STRING,
       role: {
         type: DataTypes.STRING,
         defaultValue: "USER",
