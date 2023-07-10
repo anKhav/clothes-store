@@ -12,7 +12,7 @@ export const axiosAuth = axios.create({
     withCredentials:true
 });
 axiosAuth.interceptors.request.use(function (config) {
-    const token = store.getState()?.user?.data?.access_token;
+    const token = store.getState().auth.user?.data?.access_token;
     config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
