@@ -1,5 +1,5 @@
 const {resolve} = require("path");
-const {Product, Size, ProductSize, Category, ProductCategory} = require('../db/models')
+const {Product, Size, ProductSize, Category, ProductCategory, Rating} = require('../db/models')
 const {Op} = require("sequelize");
 const ProductDto = require('../dtos/productDto')
 
@@ -84,13 +84,23 @@ class ProductService{
     async findSpecificProduct (id) {
         try{
             const product = await Product.findOne({where:{id},
-            include:[Size, Category]
+            include:[Size, Category, Rating]
             })
             return new ProductDto({
                 id: product.id,
                 name: product.name,
                 price: product.price,
                 images: product.imgs.split(','),
+                rating:product.Ratings.reduce((acc, rating) => {
+                    acc.push({
+                        id:rating.id,
+                        rating:rating.rating,
+                        review:rating.review,
+                        product_id:rating.product_id,
+                        user_id:rating.user_id,
+                    })
+                    return acc
+                }, []),
                 sizes: product.Sizes.reduce((acc, size) => {
                     acc.push(size.size)
                     return acc

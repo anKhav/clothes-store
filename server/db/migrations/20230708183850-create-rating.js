@@ -15,10 +15,10 @@ module.exports = {
       review: {
         type: Sequelize.STRING
       },
-      productId:{
+      product_id:{
         type:Sequelize.INTEGER
       },
-      userId:{
+      user_id:{
         type:Sequelize.INTEGER
       },
       createdAt: {

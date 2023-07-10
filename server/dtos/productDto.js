@@ -3,6 +3,7 @@ module.exports = class ProductDto {
   name;
   images;
   price;
+  rating;
   categories;
   sizes;
 
@@ -11,6 +12,7 @@ module.exports = class ProductDto {
     this.name = model.name;
     this.images = model.images;
     this.price = model.price;
+    this.rating = model.rating
     this.categories = model.categories;
     this.sizes = model.sizes;
   }
