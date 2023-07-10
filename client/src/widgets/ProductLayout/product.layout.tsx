@@ -12,11 +12,12 @@ interface Product {
     categories:[string | null],
 }
 interface Props {
-    product:Product
+    product:Product,
+    className?:string
 }
-const ProductLayout = ({product}:Props):ReactElement => {
+const ProductLayout = ({product, className}:Props):ReactElement => {
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${className}`}>
             <div className={styles.img_wrapper}>
                 <img className={styles.img} src={`${EXTERNAL_SERVER_BASE_URL}/${product.images[0]}`} alt=""/>
             </div>

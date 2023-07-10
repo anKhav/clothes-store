@@ -11,6 +11,7 @@ import SignUp from "../pages/auth/sign-up/sign-up.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import AdminRoute from "./AdminRoute.tsx";
 import Admin from "../pages/admin/admin.tsx";
+import Product from "../pages/product/product.tsx";
 
 function App() {
     const user = useSelector((state: RootState) => state.auth.user?.data);
@@ -23,6 +24,7 @@ function App() {
         <Routes>
             <Route path='/' element={<Dashboard/>}>
                 <Route path='/' element={<Home/>}/>
+                <Route path='/product/:id' element={<Product/>}/>
                 <Route path='/signin' element={<SignIn/>}/>
                 <Route path='/signup' element={<SignUp/>}/>
                 <Route element={<ProtectedRoute redirectPath='/signin' isLoggedIn={isLoggedIn}/>}>
