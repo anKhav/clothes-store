@@ -2,9 +2,9 @@
 
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { persistReducer } from 'redux-persist';
-
-import storage from 'redux-persist/lib/storage';
+// import { persistReducer } from 'redux-persist';
+//
+// import storage from 'redux-persist/lib/storage';
 import axios, {AxiosError} from "axios";
 
 interface User {
@@ -138,15 +138,15 @@ export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
 export const selectError = (state: RootState) => state.auth.error;
 
-// Create a persistConfig to blacklist the 'user' field from persisting
-const persistConfig = {
-    key: 'root',
-    storage,
-    blacklist: ['auth'],
-};
-
-// Wrap the auth reducer with persistReducer
-const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
+// // Create a persistConfig to blacklist the 'user' field from persisting
+// const persistConfig = {
+//     key: 'root',
+//     storage,
+//     blacklist: ['auth'],
+// };
+//
+// // Wrap the auth reducer with persistReducer
+// const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
 
 // Export the persisted auth reducer
-export default persistedAuthReducer;
+export default authSlice.reducer;

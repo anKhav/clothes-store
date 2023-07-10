@@ -6,7 +6,7 @@ const tokenService = require("../services/token.service.js");
 
 class UserService {
   async registration(userData) {
-    const { email, password, firstName, lastName, role } = userData;
+    const { email, password, first_name, last_name, role } = userData;
     if (!email || !password) {
       return new ApiError(404, "No valid values");
     }
@@ -19,8 +19,8 @@ class UserService {
     const user = await User.create({
       email,
       password: hashPassword,
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       role,
     });
 

@@ -6,12 +6,12 @@ const bcrypt = require("bcrypt");
 class UserController {
   async registration(req, res, next) {
     try {
-      const { email, password, firstName, lastName, role } = req.body;
+      const { email, password, first_name, last_name, role } = req.body;
       const userData = await userService.registration({
         email,
         password,
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         role,
       });
       return res.json(userData);
@@ -48,6 +48,7 @@ class UserController {
         },
       });
     } catch (e) {
+      console.log('error')
       return next(new ApiError(e.status, e.message));
     }
   }

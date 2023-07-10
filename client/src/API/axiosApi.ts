@@ -1,6 +1,11 @@
 import axios from "axios";
 import {store} from "../store.ts";
-import {updateUserAccessToken} from "../features/authSlice.ts";
+import {updateUserAccessToken} from "../features/auth.slice.ts";
+
+export const axiosBase = axios.create({
+    baseURL: "http://localhost:3000/api",
+    withCredentials:true
+});
 
 export const axiosAuth = axios.create({
     baseURL: "http://localhost:3000/api",

@@ -4,7 +4,7 @@ import {ThunkDispatch} from "@reduxjs/toolkit";
 import {AuthState} from "../../../store.ts";
 import {useDispatch} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
-import {registerUser} from "../../../features/authSlice.ts";
+import {registerUser} from "../../../features/auth.slice.ts";
 
 interface FormInput {
     email:string,

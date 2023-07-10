@@ -1,0 +1,7 @@
+.main{
+    padding: 20px;
+}
+.products{
+    display: flex;
+    gap: 20px;
+}

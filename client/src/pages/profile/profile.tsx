@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AuthState, RootState} from "../../store.ts";
-import {logoutUser} from "../../features/authSlice.ts";
+import {logoutUser} from "../../features/auth.slice.ts";
 import {MouseEvent} from "react";
 import {ThunkDispatch} from "@reduxjs/toolkit";
 

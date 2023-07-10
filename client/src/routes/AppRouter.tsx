@@ -1,6 +1,6 @@
 
 import {useSelector} from "react-redux";
-import {AuthState} from "../store.ts";
+import {RootState} from "../store.ts";
 import {Route, Routes} from "react-router-dom";
 import Dashboard from "../widgets/dashboard/dashboard.tsx";
 import Home from "../pages/home/home.tsx";
@@ -13,8 +13,10 @@ import AdminRoute from "./AdminRoute.tsx";
 import Admin from "../pages/admin/admin.tsx";
 
 function App() {
-    const user = useSelector((state: AuthState) => state.user?.data);
+    const user = useSelector((state: RootState) => state.auth.user?.data);
     const isLoggedIn = !!user;
+    console.log(user);
+    console.log(isLoggedIn);
     const isAdmin = user?.role === 'ADMIN';
 
     return (
