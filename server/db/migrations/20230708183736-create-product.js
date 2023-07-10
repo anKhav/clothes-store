@@ -18,9 +18,6 @@ module.exports = {
       imgs: {
         type: Sequelize.STRING
       },
-      availibleAmount:{
-        type:Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

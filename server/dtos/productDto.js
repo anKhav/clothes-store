@@ -1,8 +1,7 @@
 module.exports = class ProductDto {
   id;
   name;
-  description;
-  image;
+  images;
   price;
   categories;
   sizes;
@@ -10,8 +9,7 @@ module.exports = class ProductDto {
   constructor(model) {
     this.id = model.id;
     this.name = model.name;
-    this.description = model.description;
-    this.image = model.image;
+    this.images = model.images;
     this.price = model.price;
     this.categories = model.categories;
     this.sizes = model.sizes;

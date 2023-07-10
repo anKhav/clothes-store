@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Product.belongsToMany(models.Size, {foreignKey:'product_id', through: models.ProductSize})
-      Product.belongsToMany(models.Category, {foreignKey:'product_id', through: models.ProductCategory})
+      Product.belongsToMany(models.Size, {foreignKey:'ProductId', through: models.ProductSize})
+      Product.belongsToMany(models.Category, {foreignKey:'ProductId', through: models.ProductCategory})
       Product.belongsToMany(models.Order, {foreignKey:'product_id', through: models.ProductOrder})
       Product.hasMany(models.Rating, {foreignKey:'product_id'})
     }
@@ -20,8 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     price: DataTypes.STRING,
     imgs: DataTypes.STRING,
-    availible_amount:DataTypes.INTEGER
-
   }, {
     sequelize,
     modelName: 'Product',

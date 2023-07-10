@@ -20,7 +20,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(fileUpload({}));
+app.use(fileUpload({}))
 app.use(cookieParser());
 app.use("/api", router);
 app.use(errorHandler);
